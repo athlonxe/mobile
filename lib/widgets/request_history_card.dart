@@ -7,7 +7,9 @@ class RequestHistoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final statusColor = log.isSuccess ? const Color(0xFF15803D) : const Color(0xFFB91C1C);
+    final statusColor = log.isSuccess
+        ? const Color(0xFF15803D)
+        : const Color(0xFFB91C1C);
     return Container(
       margin: const EdgeInsets.only(bottom: 10),
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
@@ -20,21 +22,43 @@ class RequestHistoryCard extends StatelessWidget {
         children: [
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-            decoration: BoxDecoration(color: const Color(0xFFDBEAFE), borderRadius: BorderRadius.circular(7)),
-            child: Text(log.method, style: const TextStyle(color: Color(0xFF1D4ED8), fontWeight: FontWeight.w800, fontSize: 11)),
+            decoration: BoxDecoration(
+              color: const Color(0xFFDBEAFE),
+              borderRadius: BorderRadius.circular(7),
+            ),
+            child: Text(
+              log.method,
+              style: const TextStyle(
+                color: Color(0xFF1D4ED8),
+                fontWeight: FontWeight.w800,
+                fontSize: 11,
+              ),
+            ),
           ),
           const SizedBox(width: 10),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(log.endpoint, style: const TextStyle(fontWeight: FontWeight.w700)),
+                Text(
+                  log.endpoint,
+                  style: const TextStyle(fontWeight: FontWeight.w700),
+                ),
                 const SizedBox(height: 2),
-                Text(log.timeLabel, style: const TextStyle(color: Color(0xFF64748B), fontSize: 12)),
+                Text(
+                  log.timeLabel,
+                  style: const TextStyle(
+                    color: Color(0xFF64748B),
+                    fontSize: 12,
+                  ),
+                ),
               ],
             ),
           ),
-          Text('${log.statusCode}', style: TextStyle(color: statusColor, fontWeight: FontWeight.w800)),
+          Text(
+            '${log.statusCode}',
+            style: TextStyle(color: statusColor, fontWeight: FontWeight.w800),
+          ),
         ],
       ),
     );

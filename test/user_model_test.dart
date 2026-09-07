@@ -4,10 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   group('UserModel', () {
     test('fromJson menggunakan nilai fallback saat data API tidak lengkap', () {
-      final user = UserModel.fromJson({
-        'name': 'Budi Santoso',
-        'age': 22,
-      });
+      final user = UserModel.fromJson({'name': 'Budi Santoso', 'age': 22});
 
       expect(user.id, '');
       expect(user.name, 'Budi Santoso');

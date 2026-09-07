@@ -10,10 +10,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:api_tester/main.dart';
 
 void main() {
-  testWidgets('menampilkan halaman API tester', (WidgetTester tester) async {
-    await tester.pumpWidget(const ApiTesterApp());
+  testWidgets('menampilkan beranda FixMate', (WidgetTester tester) async {
+    await tester.pumpWidget(const FixMateApp());
 
-    expect(find.text('REST API Tester'), findsOneWidget);
-    expect(find.text('Kirim Request'), findsOneWidget);
+    expect(find.text('Halo, Timothy!'), findsOneWidget);
+    expect(find.text('Layanan populer'), findsOneWidget);
   });
 }
