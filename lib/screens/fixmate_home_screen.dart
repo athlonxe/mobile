@@ -1,83 +1,49 @@
 import 'package:api_tester/data/fixmate_dummy_data.dart';
+import 'package:api_tester/screens/service_detail_screen.dart';
 import 'package:api_tester/widgets/fixmate_header.dart';
-import 'package:api_tester/widgets/order_status_card.dart';
 import 'package:api_tester/widgets/service_card.dart';
 import 'package:flutter/material.dart';
 
-class FixMateHomeScreen extends StatefulWidget {
+class FixMateHomeScreen extends StatelessWidget {
   const FixMateHomeScreen({super.key});
-
-  @override
-  State<FixMateHomeScreen> createState() => _FixMateHomeScreenState();
-}
-
-class _FixMateHomeScreenState extends State<FixMateHomeScreen> {
-  int _selectedNav = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: NavigationBar(
-        backgroundColor: Colors.white,
-        indicatorColor: const Color(0xFFFFE2CC),
-        selectedIndex: _selectedNav,
-        onDestinationSelected: (index) => setState(() => _selectedNav = index),
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.home_outlined),
-            selectedIcon: Icon(Icons.home_rounded),
-            label: 'Beranda',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.laptop_outlined),
-            selectedIcon: Icon(Icons.laptop_rounded),
-            label: 'Perangkat',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.receipt_long_outlined),
-            selectedIcon: Icon(Icons.receipt_long_rounded),
-            label: 'Pesanan',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.person_outline_rounded),
-            selectedIcon: Icon(Icons.person_rounded),
-            label: 'Profil',
-          ),
-        ],
+      appBar: AppBar(
+        title: const Text(
+          'FixMate',
+          style: TextStyle(fontWeight: FontWeight.w800),
+        ),
+        centerTitle: false,
       ),
       body: SafeArea(
         child: ListView(
-          padding: const EdgeInsets.fromLTRB(20, 20, 20, 26),
+          padding: const EdgeInsets.fromLTRB(20, 12, 20, 26),
           children: [
             const FixMateHeader(),
             const SizedBox(height: 24),
             _buildHeroCard(),
             const SizedBox(height: 28),
-            _sectionTitle('Layanan populer', 'Lihat semua'),
+            _sectionTitle('Layanan populer', 'Lihat detail'),
             const SizedBox(height: 14),
-            SizedBox(
-              height: 178,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: services.length,
-                itemBuilder: (context, index) => Padding(
-                  padding: EdgeInsets.only(
-                    right: index == services.length - 1 ? 0 : 12,
+            ...services
+                .take(3)
+                .map(
+                  (service) => Padding(
+                    padding: const EdgeInsets.only(bottom: 12),
+                    child: ServiceCard(
+                      service: service,
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute<void>(
+                          builder: (context) =>
+                              ServiceDetailScreen(service: service),
+                        ),
+                      ),
+                    ),
                   ),
-                  child: ServiceCard(service: services[index]),
                 ),
-              ),
-            ),
-            const SizedBox(height: 28),
-            _sectionTitle('Status servis kamu', 'Semua pesanan'),
-            const SizedBox(height: 14),
-            ListView.builder(
-              itemCount: orders.length,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) =>
-                  OrderStatusCard(order: orders[index]),
-            ),
           ],
         ),
       ),
@@ -123,13 +89,17 @@ class _FixMateHomeScreenState extends State<FixMateHomeScreen> {
             children: [
               Text(
                 'Butuh servis laptop?',
-                style: TextStyle(fontSize: 19, fontWeight: FontWeight.w800),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 19,
+                  fontWeight: FontWeight.w800,
+                ),
               ),
               SizedBox(height: 7),
               SizedBox(
                 width: 200,
                 child: Text(
-                  'Pesan teknisi tepercaya dan pantau prosesnya dari sini.',
+                  'Pilih salah satu layanan dan lihat detailnya.',
                   style: TextStyle(
                     color: Color(0xFFE7DED7),
                     fontSize: 12,
@@ -138,7 +108,7 @@ class _FixMateHomeScreenState extends State<FixMateHomeScreen> {
                 ),
               ),
               Spacer(),
-              _BookServiceButton(),
+              _CatalogHint(),
             ],
           ),
         ),
@@ -162,9 +132,16 @@ class _FixMateHomeScreenState extends State<FixMateHomeScreen> {
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(18),
+              boxShadow: const [
+                BoxShadow(
+                  color: Color(0x1A000000),
+                  blurRadius: 12,
+                  offset: Offset(0, 4),
+                ),
+              ],
             ),
             child: const Text(
-              'Respons < 15 menit',
+              '3 layanan tersedia',
               style: TextStyle(fontSize: 10, color: Color(0xFFB64C0A)),
             ),
           ),
@@ -174,20 +151,25 @@ class _FixMateHomeScreenState extends State<FixMateHomeScreen> {
   }
 }
 
-class _BookServiceButton extends StatelessWidget {
-  const _BookServiceButton();
+class _CatalogHint extends StatelessWidget {
+  const _CatalogHint();
 
   @override
   Widget build(BuildContext context) {
-    return FilledButton(
-      onPressed: () {},
-      style: FilledButton.styleFrom(
-        backgroundColor: const Color(0xFFD9671E),
-        foregroundColor: Colors.white,
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 9),
-        textStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.w800),
-      ),
-      child: const Text('Pesan Servis'),
+    return const Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(Icons.touch_app_rounded, size: 18, color: Colors.white),
+        SizedBox(width: 7),
+        Text(
+          'Ketuk kartu untuk detail',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 12,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+      ],
     );
   }
 }

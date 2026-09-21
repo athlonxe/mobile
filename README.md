@@ -1,39 +1,38 @@
-# API Tester - Tugas #2 dan #3 Mobile Developer
+# FixMate
 
-Proyek Flutter ini berisi aplikasi REST API tester, implementasi model data
-`UserModel` untuk Tugas #2, serta UI modular untuk Tugas #3 Mobile Developer.
+FixMate adalah aplikasi Flutter sederhana untuk melihat dan memilih layanan
+servis laptop. Project ini saya buat untuk mengerjakan tugas Mobile Developer,
+terutama materi routing, navigation, event, dan state.
 
-## Implementasi tugas
+## Fitur
 
-Model tersedia di `lib/user_model.dart` dan menerapkan:
+- Menampilkan tiga pilihan layanan servis di halaman beranda.
+- Setiap layanan bisa dibuka untuk melihat detail, harga, dan estimasi waktu.
+- Berpindah dari halaman beranda ke detail menggunakan `Navigator.push`.
+- Tombol kembali tersedia melalui `AppBar` pada halaman detail.
+- Tombol booking berubah menjadi `Layanan Dibooking` setelah ditekan.
+- Booking bisa dibatalkan dengan menekan tombol yang sama sekali lagi.
 
-- null safety dengan properti wajib dan opsional;
-- constructor dengan named parameters;
-- `factory UserModel.fromJson(Map<String, dynamic> json)`;
-- `Map<String, dynamic> toJson()`;
-- fallback aman ketika respons API tidak lengkap (`id`, `name`, `age`, atau
-  `isActive` tidak dikirim).
+Halaman beranda dibuat menggunakan `StatelessWidget`, sedangkan halaman detail
+menggunakan `StatefulWidget` karena ada perubahan status pada tombol booking.
+Data layanan untuk sementara masih berupa data lokal yang ada di
+`lib/data/fixmate_dummy_data.dart`.
 
-Pengujian otomatisnya ada di `test/user_model_test.dart`.
+## Cara menjalankan
 
-## Implementasi Tugas #3
+Pastikan Flutter sudah terpasang. Setelah itu buka terminal di folder project
+dan jalankan:
 
-Antarmuka API Tester dipecah menjadi komponen yang dapat dipakai ulang:
+```bash
+flutter pub get
+flutter run
+```
 
-- `lib/screens/api_tester_screen.dart`: halaman utama dan logika request HTTP;
-- `lib/widgets/api_tester_header.dart`: header dengan `Stack` dan
-  `Positioned` untuk kartu petunjuk yang bertumpuk;
-- `lib/widgets/request_form_card.dart`: form request dan tampilan response;
-- `lib/widgets/request_history_card.dart`: kartu riwayat request;
-- `lib/models/request_log.dart`: model data riwayat request.
-
-Riwayat berisi data dummy dan dirender melalui `ListView.builder`, sehingga
-item dibuat secara lazy saat pengguna menggulir. Setelah request berhasil,
-riwayat request baru otomatis ditambahkan di urutan teratas.
-
-## Menjalankan proyek
+Untuk menjalankan pengujian:
 
 ```bash
 flutter test
-flutter run
 ```
+
+Project ini belum menggunakan backend atau database MySQL karena data layanan
+masih disimpan langsung di dalam aplikasi.
